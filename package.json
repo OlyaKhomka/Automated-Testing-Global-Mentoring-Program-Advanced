@@ -1,0 +1,28 @@
+{
+  "name": "automated-testing-global-mentoring-program-advanced",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "headed": "npx playwright test --headed",
+    "ui": "npx playwright test --ui"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OlyaKhomka/Automated-Testing-Global-Mentoring-Program-Advanced.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OlyaKhomka/Automated-Testing-Global-Mentoring-Program-Advanced/issues"
+  },
+  "homepage": "https://github.com/OlyaKhomka/Automated-Testing-Global-Mentoring-Program-Advanced#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.50.0",
+    "@types/node": "^22.10.10"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
+}
