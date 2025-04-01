@@ -2,7 +2,7 @@ const BasePage = require('./basePage');
 
 class LaunchesPage extends BasePage {
   constructor(page) {
-    super(page)
+    super(page);
     this.allLaunchesButton = this.page.locator('.allLatestDropdown__value--QwA8E.allLatestDropdown__active--qisno');
   };
 

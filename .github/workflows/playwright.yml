@@ -29,7 +29,11 @@ jobs:
       # Step 4: Run linting (Optional if you use ESLint or similar tools)
       - name: Run linting
         run: npm run eslint
+      
+      # Step 5: Install Playwright browsers
+      - name: Install Playwright browsers
+        run: npx playwright install
 
-      # Step 5: Run tests
+      # Step 6: Run tests
       - name: Run tests in PROD. not headed
         run: TEST_ENV=prod npx playwright test
