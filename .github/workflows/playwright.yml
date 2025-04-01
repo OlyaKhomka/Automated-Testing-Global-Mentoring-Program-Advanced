@@ -32,4 +32,4 @@ jobs:
 
       # Step 5: Run tests
       - name: Run tests in PROD. not headed
-        run: cross-env TEST_ENV=prod npx playwright test
+        run: TEST_ENV=prod npx playwright test
