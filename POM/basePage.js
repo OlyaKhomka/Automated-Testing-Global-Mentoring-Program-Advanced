@@ -3,8 +3,8 @@ const sidePanel = require('./sidePanel');
 
 class BasePage extends baseComponents {
   constructor(page) {
-    super(page)
-    this.sidePanel = new sidePanel(this.page);  // The page object is passed and stored for use in subclasses
+    super(page);
+    this.sidePanel = new sidePanel(this.page); // The page object is passed and stored for use in subclasses
   }
 };
 

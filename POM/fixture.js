@@ -8,7 +8,7 @@ export const test = base.extend({
     const pageFactory = {
       dashboardPage: new DashboardPage(page),
       launchesPage: new LaunchesPage(page),
-    }
+    };
     await use(pageFactory);  
   }
 });
