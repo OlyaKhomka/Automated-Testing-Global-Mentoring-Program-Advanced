@@ -24,7 +24,7 @@ jobs:
 
       # Step 3: Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       # Step 4: Run linting (Optional if you use ESLint or similar tools)
       - name: Run linting
