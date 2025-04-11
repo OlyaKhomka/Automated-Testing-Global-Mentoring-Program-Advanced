@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "headed": "npx playwright test --headed",
-    "ui": "npx playwright test --ui"
+    "headed_prod": "cross-env TEST_ENV=prod npx playwright test --headed",
+    "headed_local": "cross-env TEST_ENV=local npx playwright test --headed",
+    "ui_prod": "cross-env TEST_ENV=prod npx playwright test --ui",
+    "ui_local": "cross-env TEST_ENV=local npx playwright test --ui",
+    "eslint": "npx eslint .",
+    "eslint_fix": "npx eslint --fix"
   },
   "repository": {
     "type": "git",
@@ -19,10 +23,16 @@
   },
   "homepage": "https://github.com/OlyaKhomka/Automated-Testing-Global-Mentoring-Program-Advanced#readme",
   "devDependencies": {
+    "@eslint/js": "^9.23.0",
     "@playwright/test": "^1.50.0",
-    "@types/node": "^22.10.10"
+    "@types/node": "^22.10.10",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.23.0",
+    "globals": "^16.0.0",
+    "playwright": "^1.51.1"
   },
   "dependencies": {
-    "dotenv": "^16.4.7"
+    "dotenv": "^16.4.7",
+    "winston": "^3.17.0"
   }
 }
