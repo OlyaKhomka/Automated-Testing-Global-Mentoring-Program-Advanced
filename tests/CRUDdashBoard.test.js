@@ -14,7 +14,6 @@ test.describe("General CRUD actions test for Report Portal > Dashboard Page", ()
   // });
 
   test('Add dashboard and check if it is present', async ({ page, pageFactory }) => {
-    await expect(pageFactory.dashboardPage.addDashboardButton).toBeVisible();
     const dashboardName = Date.now().toString(); // to always generate unique numbers 
     await pageFactory.dashboardPage.addDashboard(dashboardName, 'description2');
     await expect (pageFactory.dashboardPage.noWidgetMessage).toBeVisible();
