@@ -5,8 +5,7 @@ import { test } from '../core/configuration/fixtures/fixture'; // Import the cus
 test.describe("General CRUD actions test for Report Portal > Dashboard Page", () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('/ui/#default_personal/dashboard');
-    
+    await page.goto('/ui/#default_personal/dashboard', { waitUntil: 'networkidle' });
   });
 
   // test('Successfully access dashboard', async ({ page, pageFactory }) => {
