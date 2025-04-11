@@ -23,6 +23,7 @@ createdDashboard = (createdDashboardTitle) => this.page.locator(`//a[contains(@c
 
   async addDashboard(dashboardNameText, dashboardDescriptionText) {
     await this.addDashboardButton.click();
+    await this.dashboardName.waitFor({ state: 'visible' });
     await this.dashboardName.fill(dashboardNameText);
     await this.dashboardDescription.fill(dashboardDescriptionText);
     await this.addButton.click();
