@@ -14,6 +14,7 @@ class DashboardPage extends BasePage {
   addWidgetButton = this.page.locator('//span[text()="Add new widget"]').nth(1);
   nextStepButton = this.page.locator('//span[text()="Next step"]');
   noWidgetMessage = this.page.locator('.emptyWidgetGrid__empty-widget-headline--ZocRI');
+  submitFilterButton = this.page.locator('.bigButton__big-button--BmG4Q.addEditFilter__button-inline--eGR3g.bigButton__color-booger--EpRlL');
   demoFilter = this.page.locator('.widgetHeader__widget-name-block--AOAHS');
   addFilterButton = this.page.locator('//span[text()="Add filter"]');
   filterNameInput = this.page.locator('input[placeholder="Input filter name"]');
@@ -60,6 +61,9 @@ class DashboardPage extends BasePage {
     await this.addFilterButton.click();
     await this.filterNameInput.fill(filterName);
     await this.launchNameInput.fill(launchName);
+    await this.submitFilterButton.click();
+    await this.nextStepButton.click();
+    await this.addButton.click();
   };
 
 };

@@ -9,7 +9,10 @@
     "ui_prod": "cross-env TEST_ENV=prod npx playwright test --ui",
     "ui_local": "cross-env TEST_ENV=local npx playwright test --ui",
     "eslint": "npx eslint .",
-    "eslint_fix": "npx eslint --fix"
+    "eslint_fix": "npx eslint --fix",
+    "mocha_parallel_prod": "cross-env TEST_ENV=prod mocha \"tests/mocha/*.spec.js\" --parallel --require ./core/configuration/hooks/mochaHooks.js --timeout 60000",
+    "mocha_parallel_local": "cross-env TEST_ENV=local mocha \"tests/mocha/*.spec.js\" --parallel --require ./core/configuration/hooks/mochaHooks.js --timeout 60000",
+    "custom_mocha_runner_prod": "cross-env TEST_ENV=prod node core/configuration/runners/mochaRunner.js"
   },
   "repository": {
     "type": "git",
@@ -26,9 +29,12 @@
     "@eslint/js": "^9.23.0",
     "@playwright/test": "^1.50.0",
     "@types/node": "^22.10.10",
+    "chai": "^5.2.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.23.0",
     "globals": "^16.0.0",
+    "mocha": "^11.1.0",
+    "mocha-parallel-tests": "^2.3.0",
     "playwright": "^1.51.1"
   },
   "dependencies": {

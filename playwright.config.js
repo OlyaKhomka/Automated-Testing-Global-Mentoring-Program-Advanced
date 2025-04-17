@@ -20,6 +20,8 @@ const baseURL = TEST_ENV === 'prod' ? process.env.BASE_URL_PROD : process.env.BA
  */
 export default defineConfig({
   testDir: './tests',
+  testIgnore:'**/*.spec.js', // Ignore mocha-style test files
+ 
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
