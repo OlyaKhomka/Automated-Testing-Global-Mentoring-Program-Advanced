@@ -24,12 +24,24 @@ jobs:
 
       # Step 3: Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       # Step 4: Run linting (Optional if you use ESLint or similar tools)
       - name: Run linting
         run: npm run eslint
+      
+      # Step 5: Install Playwright browsers
+      - name: Install Playwright browsers
+        run: npx playwright install
 
-      # Step 5: Run tests
+      # Step 6: Create .env file using GitHub secrets 
+      - name: Create .env file from secrets
+        run: |
+          echo "USER_EMAIL=${{ secrets.USER_EMAIL }}" >> .env
+          echo "USER_PASSWORD=${{ secrets.USER_PASSWORD }}" >> .env
+          echo "BASE_URL_LOCAL=${{ secrets.BASE_URL_LOCAL }}" >> .env
+          echo "BASE_URL_PROD=${{ secrets.BASE_URL_PROD }}" >> .env
+
+      # Step 7: Run tests
       - name: Run tests in PROD. not headed
         run: TEST_ENV=prod npx playwright test
