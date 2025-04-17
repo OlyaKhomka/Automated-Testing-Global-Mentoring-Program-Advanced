@@ -1,8 +1,7 @@
-//import { test as setup, expect } from '@playwright/test';
-import { test as setup } from '../../core/configuration/fixtures/fixture';
+import { test as setup } from '../../core/fixtures/fixture';
 import { expect } from 'playwright/test';
 import path from 'path';
-import logger from '../../core/configuration/logger';
+import logger from '../../core/utils/logger';
 const authFile = path.join(__dirname, '../testData/.auth/user.json');
 
 setup('authenticate', async ({ page, pageFactory}) => {
