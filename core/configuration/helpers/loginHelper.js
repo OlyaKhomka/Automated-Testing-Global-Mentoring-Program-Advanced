@@ -11,7 +11,7 @@ const TEST_ENV = process.env.TEST_ENV;
 const baseURL = TEST_ENV === 'prod' ? process.env.BASE_URL_PROD : process.env.BASE_URL_LOCAL;
 
 async function loginAndSaveAuth() {
-  const browser = await chromium.launch({ headless: false });
+  const browser = await chromium.launch();
   const context = await browser.newContext();
   const page = await context.newPage();
   const logInPage = new LogInPage(page);
