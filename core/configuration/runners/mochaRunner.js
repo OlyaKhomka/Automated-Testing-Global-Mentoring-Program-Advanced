@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const mochaHooks = require('../hooks/mochaHooks.js');
 const logger = require('../../utils/logger.js');
+const { mochaGlobalSetup }= require('../../fixtures/mochaGlobal.fixture');
 
 (async function runMochaTests() {
 
@@ -12,7 +13,9 @@ const logger = require('../../utils/logger.js');
     const mocha = new Mocha({
         timeout: 100000,
     });
-    mocha.rootHooks(mochaHooks.mochaHooks);
+    
+     mocha.globalSetup(mochaGlobalSetup);
+     mocha.rootHooks(mochaHooks.mochaHooks);
     try {
         // Read the directory and add each .js test file to Mocha. Can be converted into recursion function if there are any sub-folders
         fs.readdirSync(testDir).forEach(file => {
@@ -23,7 +26,7 @@ const logger = require('../../utils/logger.js');
                 logger.error(`${fullPath} is not a JS file`); // Log non-JS files
             }
         });
-        // mocha.grep(/tag/i); //Run tagged tests only: case-insensitive
+        // // mocha.grep(/tag/i); //Run tagged tests only: case-insensitive
 
         // Run the Mocha tests
         mocha.run(failures => {

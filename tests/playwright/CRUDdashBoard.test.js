@@ -5,7 +5,7 @@ import { test } from '../../core/fixtures/fixture.js'; // Import the custom 'tes
 test.describe("General CRUD actions test for Report Portal > Dashboard Page", () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('/ui/#default_personal/dashboard', { waitUntil: 'networkidle' });
+    await page.goto(`/ui/#${process.env.DASHBOARD_NAME}/dashboard`, { waitUntil: 'networkidle' });
   });
 
   test('Add dashboard & configure widget and check if they are present', async ({ page, pageFactory }) => {
@@ -13,7 +13,7 @@ test.describe("General CRUD actions test for Report Portal > Dashboard Page", ()
     await pageFactory.dashboardPage.addDashboard(testData, 'description2');
     await expect(pageFactory.dashboardPage.noWidgetMessage).toBeVisible();
     await pageFactory.dashboardPage.addWidgetWithNewFilter('Launch statistics chart', testData, testData);
-    await page.goto('/ui/#default_personal/dashboard');
+    await page.goto(`/ui/#${process.env.DASHBOARD_NAME}/dashboard`);
     await expect(pageFactory.launchesPage.createdDashboard(testData)).toBeVisible();
   });
 
