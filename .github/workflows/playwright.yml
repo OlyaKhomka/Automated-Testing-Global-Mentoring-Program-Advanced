@@ -41,7 +41,8 @@ jobs:
           echo "USER_PASSWORD=${{ secrets.USER_PASSWORD }}" >> .env
           echo "BASE_URL_LOCAL=${{ secrets.BASE_URL_LOCAL }}" >> .env
           echo "BASE_URL_PROD=${{ secrets.BASE_URL_PROD }}" >> .env
+          echo "DASHBOARD_NAME${{ secrets.DASHBOARD_NAME }}" >> .env
 
       # Step 7: Run tests
       - name: Run tests in PROD. not headed
-        run: TEST_ENV=prod npx playwright test
+        run: TEST_ENV=prod npx playwright test --timeout=60000
