@@ -12,7 +12,9 @@
     "eslint_fix": "npx eslint --fix",
     "mocha_parallel_prod": "cross-env TEST_ENV=prod mocha \"tests/mocha/*.spec.js\" --parallel --require ./core/configuration/hooks/mochaHooks.js --require ./core/fixtures/mochaGlobal.fixture.js --timeout 60000",
     "mocha_parallel_local": "cross-env TEST_ENV=local mocha \"tests/mocha/*.spec.js\" --parallel --require ./core/configuration/hooks/mochaHooks.js  --require ./core/fixtures/mochaGlobal.fixture.js --timeout 60000",
-    "custom_mocha_runner_prod": "cross-env TEST_ENV=prod node core/configuration/runners/mochaRunner.js"
+    "custom_mocha_runner_prod": "cross-env TEST_ENV=prod node core/configuration/runners/mochaRunner.js",
+    "custom_cucumber_runner_prod": "cross-env TEST_ENV=prod node core/configuration/runners/cucumberRunner.js",
+    "cucumber_parallel_prod": "cross-env TEST_ENV=prod cucumber-js --config cucumber.js --parallel 2"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,7 @@
   },
   "homepage": "https://github.com/OlyaKhomka/Automated-Testing-Global-Mentoring-Program-Advanced#readme",
   "devDependencies": {
+    "@cucumber/cucumber": "^11.2.0",
     "@eslint/js": "^9.23.0",
     "@playwright/test": "^1.50.0",
     "@types/node": "^22.10.10",
