@@ -5,17 +5,17 @@ const logger = require('../../utils/logger');
 setDefaultTimeout(60 * 1000);
 
 BeforeAll( async function() {
-  logger.info('I am in BeforeALL');
+  logger.info('Perform Login');
   await loginAndSaveAuth();
 }),
 
 Before(async function () {
-  logger.info('I am in Before');
+  logger.info('Initialize Browser');
   await this.initBrowser();
 
 }),
 
 After(async function() {
-logger.info('I am in After');
+logger.info('Close Browser');
 await this.closeBrowser();
 });

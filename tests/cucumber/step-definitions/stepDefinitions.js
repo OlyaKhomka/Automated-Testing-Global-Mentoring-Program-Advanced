@@ -1,9 +1,18 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { expect } = require('@playwright/test');
+require('dotenv').config();
 
 // action steps 
-Given('I navigate to {string}', { timeout: 10000 }, async function (url) {
+Given('I navigate to {string}', { timeout: 10000 }, async function (url) { 
+  if (url.includes('{DASHBOARD_NAME}')) {
+    const resolvedUrl = url.replace('{DASHBOARD_NAME}', `${process.env.DASHBOARD_NAME}`);
+    await this.page.goto(`${this.baseURL}` + resolvedUrl);
+  } else
   await this.page.goto(`${this.baseURL}` + url);
+});
+
+Given('I reload the page', async function() {
+  await this.page.reload();
 });
 
 Given('I click {string}', async function (elementPath) {
@@ -25,8 +34,9 @@ Given('I type {string} into {string}', async function (inputText, elementPath) {
 });
 
 //step to interact with the rows
-Given('I click {string} button in table row with name {string}', async function (rowButton, rowName) {
+Given('I click {string} button in table row with remembered name {string}', async function (rowButton, generatedData) {
   const value = rowButton.toLowerCase();
+  const rowName = this.recall(generatedData);
   const row = this.pageFactory.dashboardPage.rowName(rowName);
   switch (value) {
     case 'duplicate':
@@ -84,13 +94,16 @@ Then('I expect dashboard with remembered {string} name to be visible', async fun
   await expect(this.pageFactory.dashboardPage.createdDashboard(dashboardName)).toBeVisible();
 });
 
-Given('I add new dashboard with the remembered name {string} and description {string}', async function (generatedTestData, dashboardDescriptionText) {
+Given('I add new dashboard with the remembered name {string} and description {string}', async function (generatedTestData, generatedTestData1) {
   const dashboardNameText = this.recall(generatedTestData);
+  const dashboardDescriptionText = this.recall(generatedTestData1);
   await this.pageFactory.dashboardPage.addDashboard(dashboardNameText, dashboardDescriptionText);
 });
 
-Given('I add new widget with {string} widget type & remembered {string} filter name & remembered {string} launch name', async function (widgetTypeText, generatedData, generatedData2) {
-  const filterName = this.recall(generatedData);
-  const launchName = this.recall(generatedData2);
+Given('I add new widget with the following remembered details:', async function (dataTable) {
+  const data = dataTable.rowsHash();
+  const widgetTypeText = data.widgetType;
+  const filterName = this.recall(data.filterName);
+  const launchName = this.recall(data.launchName);
   await this.pageFactory.dashboardPage.addWidgetWithNewFilter(widgetTypeText, filterName, launchName);
 });
