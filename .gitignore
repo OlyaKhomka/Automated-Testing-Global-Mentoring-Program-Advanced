@@ -7,3 +7,4 @@ node_modules/
 .auth
 .env
 *.log
+core/api/apiHelpers/apiTestData/token.json
