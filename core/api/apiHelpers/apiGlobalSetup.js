@@ -1,13 +1,14 @@
 // core/api/apiHelpers/apiGlobalSetup.js
 const { test } = require('@playwright/test');
 const { loginAndGetToken } = require('./apiLoginHelper');
-const fs = require('fs');
-const path = require('path');
 const logger = require('../../utils/logger');
 
-test('setup: login and save token', async () => {
+test('setup: login and assign token to process.env', async () => {
   logger.info('>>> API setup started');
   const token = await loginAndGetToken();
-  const tokenPath = path.resolve(__dirname, './apiTestData/token.json');
-  fs.writeFileSync(tokenPath, JSON.stringify({ token }));
+
+  // Assign token to environment variable in memory
+  process.env.TOKEN = token;
+
+  logger.info('>>> Token saved to process.env.TOKEN');
 });

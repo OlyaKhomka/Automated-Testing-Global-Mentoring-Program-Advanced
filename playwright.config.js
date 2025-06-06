@@ -59,7 +59,7 @@ export default defineConfig({
     {
       name: 'api-setup',
       testDir: './core/api/apiHelpers',
-      testMatch: ['apiGlobalSetup.js'], // укажи имя своего setup-файла точно
+      testMatch: ['apiGlobalSetup.js'],
       fullyParallel: false,
       retries: 0,
       use: {
@@ -69,11 +69,11 @@ export default defineConfig({
     {
       name: 'api-tests',
       testDir: './tests/api',
-      testMatch: ['**/*.js', '!apiGlobalSetup.js'], // исключаем setup
+      testMatch: ['**/*.js', '!apiGlobalSetup.js'], 
       retries: 0,
       use: {
         browserName: undefined,
-        baseURL: process.env.BASE_URL_PROD || 'http://localhost:3000',
+        baseURL: process.env.BASE_URL_PROD,
         trace: 'off',
       },
       dependencies: ['api-setup'],
