@@ -20,6 +20,9 @@ class DashboardPage extends BasePage {
   filterNameInput = this.page.locator('input[placeholder="Input filter name"]');
   launchNameInput = this.page.locator('input[placeholder="Enter name"]');
   duplicateOption = this.page.locator('.dashboardTable__dropdown-item--hEDwe', { hasText: 'Duplicate' });
+  duplicateDashboardError = this.page.locator('.notificationItem__message-container--eN8Rd.notificationItem__error--gkqHe');
+  //selector for dashboard description that returns lots items to filter them
+  createdDashboardDescription = this.page.locator('.dashboardTable__description--tHp7Q');
   //dynamic selectors:
   widgetType = (widgetTypeText) => this.page.locator(`//div[contains(text(), "${widgetTypeText}")]`);
   filterType = (filterType) => this.page.locator(`//span[contains(text(), "${filterType}")]`);
