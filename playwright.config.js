@@ -42,6 +42,7 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
+
   /* Configure projects for major browsers */
   projects: [
     { name: 'setup', testMatch: /.*\.setup\.js/ },
@@ -53,12 +54,30 @@ export default defineConfig({
         storageState: path.resolve(__dirname, 'tests/testData/.auth/user.json')
        },
        dependencies: ['setup']
-    }
+    },
 
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
+    {
+      name: 'api-setup',
+      testDir: './core/api/apiHelpers',
+      testMatch: ['apiGlobalSetup.js'],
+      fullyParallel: false,
+      retries: 0,
+      use: {
+        browserName: undefined,
+      },
+    },
+    {
+      name: 'api-tests',
+      testDir: './tests/api',
+      testMatch: ['**/*.js', '!apiGlobalSetup.js'], 
+      retries: 0,
+      use: {
+        browserName: undefined,
+        baseURL: process.env.BASE_URL_PROD,
+        trace: 'off',
+      },
+      dependencies: ['api-setup'],
+    },
 
     // {
     //   name: 'webkit',

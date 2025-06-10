@@ -14,7 +14,8 @@
     "mocha_parallel_local": "cross-env TEST_ENV=local mocha \"tests/mocha/*.spec.js\" --parallel --require ./core/configuration/hooks/mochaHooks.js  --require ./core/fixtures/mochaGlobal.fixture.js --timeout 60000",
     "custom_mocha_runner_prod": "cross-env TEST_ENV=prod node core/configuration/runners/mochaRunner.js",
     "custom_cucumber_runner_prod": "cross-env TEST_ENV=prod node core/configuration/runners/cucumberRunner.js",
-    "cucumber_parallel_prod": "cross-env TEST_ENV=prod cucumber-js --config cucumber.js --parallel 2"
+    "cucumber_parallel_prod": "cross-env TEST_ENV=prod cucumber-js --config cucumber.js --parallel 2",
+    "test_api": "npx playwright test --project=api-tests"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "@eslint/js": "^9.23.0",
     "@playwright/test": "^1.50.0",
     "@types/node": "^22.10.10",
+    "ajv": "^8.17.1",
     "chai": "^5.2.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.23.0",
