@@ -11,6 +11,7 @@ const TEST_ENV = process.env.TEST_ENV;
 const baseURL = TEST_ENV === 'prod' ? process.env.BASE_URL_PROD : process.env.BASE_URL_LOCAL;
 
 async function loginAndSaveAuth() {
+
   const browser = await chromium.launch();
   const context = await browser.newContext();
   const page = await context.newPage();
@@ -18,7 +19,7 @@ async function loginAndSaveAuth() {
 
   await page.goto(`${baseURL}/ui/#login`);
   await logInPage.loginInput.fill(process.env.USER_EMAIL);
-  await logInPage.passwordInInput.fill(process.env.USER_PASSWORD);
+  await logInPage.passwordInput.fill(process.env.USER_PASSWORD);
   await logInPage.logInButton.click();
 
   await page.waitForLoadState('domcontentloaded');
