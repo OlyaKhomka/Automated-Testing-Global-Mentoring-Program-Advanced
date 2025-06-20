@@ -44,15 +44,21 @@ exports.config = {
     // Framework Configurations
     // ====================
     framework: 'mocha', // The test framework to use
-    reporters: ['spec'], // Spec reporter outputs test results in the console
-
+    reporters: [
+        ['allure', {
+            outputDir: './tests-results/allure-results', // Directory where allure results will be stored
+            disableWebdriverStepsReporting: true,
+            disableWebdriverScreenshotsReporting: false, // This automatically attaches screenshots
+        }]
+    ],
     mochaOpts: {
         ui: 'bdd', // Mocha's test interface: BDD (Behavior Driven Development)
         timeout: 60000 // Test timeout in milliseconds
     },
 
     before: hooks.before,
-    beforeSuite: hooks.beforeSuite,   // Подключает передсьютовый хук
-    beforeTest: hooks.beforeTest,     // Подключает передтестовый хук
-    afterSuite: hooks.afterSuite,     // Подключает хук завершения сьюта
+    beforeSuite: hooks.beforeSuite,
+    beforeTest: hooks.beforeTest,
+    afterTest: hooks.afterTest,
+    afterSuite: hooks.afterSuite,
 };

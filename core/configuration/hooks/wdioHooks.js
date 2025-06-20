@@ -43,6 +43,10 @@ module.exports = {
     afterTest: async function (test, result) {
         if (!result.passed) {
             logger.error(`Test Error: ${test.title}`);
+
+            const screenshot = await browser.takeScreenshot();
+            allure.addAttachment('Screenshot on Failure', Buffer.from(screenshot, 'base64'), 'image/png');
+
         } else {
             logger.info(`Success : ${test.title}`);
         }
