@@ -20,8 +20,12 @@ const baseURL = TEST_ENV === 'prod' ? process.env.BASE_URL_PROD : process.env.BA
  */
 export default defineConfig({
   testDir: './tests',
-  testIgnore:'**/*.spec.js', // Ignore mocha-style test files
- 
+  testIgnore: [
+    '**/*.spec.js',
+    '**/*.e2e.js',
+    'api/*.js'
+  ], // Ignore mocha-style test files
+
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -36,7 +40,7 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL,
-  //  baseURL:'https://demo.reportportal.io',
+    //  baseURL:'https://demo.reportportal.io',
     //baseURL: 'http://localhost:8080/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
@@ -46,14 +50,15 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     { name: 'setup', testMatch: /.*\.setup\.js/ },
-    
+
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'],
+      use: {
+        ...devices['Desktop Chrome'],
         // storageState: './testData/.auth/user.json'
         storageState: path.resolve(__dirname, 'tests/testData/.auth/user.json')
-       },
-       dependencies: ['setup']
+      },
+      dependencies: ['setup']
     },
 
     {
@@ -69,7 +74,7 @@ export default defineConfig({
     {
       name: 'api-tests',
       testDir: './tests/api',
-      testMatch: ['**/*.js', '!apiGlobalSetup.js'], 
+      testMatch: ['**/*.js', '!apiGlobalSetup.js'],
       retries: 0,
       use: {
         browserName: undefined,

@@ -1,13 +1,14 @@
 const BaseComponents = require('./baseComponents');
 
 class SidePanel extends BaseComponents {
-  constructor(page) {
-    super(page);
-  }
-  //Selectors:
-  launchesButton = this.page.locator('.sidebarButton__sidebar-nav-btn--gbV_N').nth(1); // Corrected spelling
-  dashboardButton = this.page.locator('.sidebarButton__nav-link--gZnHQ.sidebarButton__active--GG93E');
-};
+    constructor(pageOrBrowser) {
+        super(pageOrBrowser); // Call the parent constructor
+
+        // **Selectors**:
+        this.launchesButton = this.getLocators('.sidebarButton__sidebar-nav-btn--gbV_N', 1);
+        this.launchesTooltip = this.getLocator('.tooltip__tooltip--rBEx7.tooltip__no-mobile--knDWj.tooltip__dark--RBXcd');
+        this.dashboardButton = this.getLocator('.sidebarButton__nav-link--gZnHQ.sidebarButton__active--GG93E');
+    }
+}
 
 module.exports = SidePanel;
-
