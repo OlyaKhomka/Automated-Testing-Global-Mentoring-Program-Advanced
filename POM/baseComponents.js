@@ -6,17 +6,6 @@
 // };
 
 // module.exports = BaseComponents;
-// class BaseComponents {
-//     /**
-//      * Initialize the page/browser context
-//      * @param {Object} pageOrBrowser - Playwright's `page` or WebdriverIO's `browser`.
-//      */
-//     constructor(pageOrBrowser) {
-//         this.page = pageOrBrowser; // Store the page/browser context
-//     }
-// }
-
-// module.exports = BaseComponents;
 
 class BaseComponents {
     constructor(pageOrBrowser) {

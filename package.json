@@ -16,8 +16,7 @@
     "custom_cucumber_runner_prod": "cross-env TEST_ENV=prod node core/configuration/runners/cucumberRunner.js",
     "cucumber_parallel_prod": "cross-env TEST_ENV=prod cucumber-js --config cucumber.js --parallel 2",
     "test_api": "npx playwright test --project=api-tests",
-    "wdio_prod": "if exist tests-results\\allure-results rmdir /s /q tests-results\\allure-results && cross-env TEST_ENV=prod TEST_FRAMEWORK=wdio npx wdio run ./wdio.conf.js",
-    "wdio_allure_report": "allure generate ./tests-results/allure-results --clean -o ./tests-results/allure-report && allure open ./tests-results/allure-report"
+    "wdio_prod": "if exist tests-results\\allure-results rmdir /s /q tests-results\\allure-results && cross-env TEST_ENV=prod TEST_FRAMEWORK=wdio npx wdio run ./wdio.conf.js"
     },
   "repository": {
     "type": "git",
