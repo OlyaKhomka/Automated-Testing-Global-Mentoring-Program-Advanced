@@ -45,4 +45,4 @@ jobs:
 
       # Step 7: Run tests
       - name: Run tests in PROD. not headed
-        run: TEST_ENV=prod npx playwright test --timeout=60000
+        run:  TEST_ENV=prod TEST_FRAMEWORK=playwright npx playwright test --timeout=60000
