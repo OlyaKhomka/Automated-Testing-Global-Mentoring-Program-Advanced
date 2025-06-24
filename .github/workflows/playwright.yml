@@ -88,14 +88,3 @@ jobs:
         with:
           name: junit-results
           path: test-results/
-
-      - name: Send Slack notification (finish)
-        if: ${{ always() }}  # always even if the tests fail 
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        run: |
-          RESULT="Успешно"
-          if [ ${{ job.status }} != "success" ]; then
-            RESULT="С ошибками"
-          fi
-          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"✅Test Run finished: $RESULT\"}" $SLACK_WEBHOOK_URL
