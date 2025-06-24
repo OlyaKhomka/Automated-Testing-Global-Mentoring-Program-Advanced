@@ -7,7 +7,7 @@ on:
     branches: 
       - main
   schedule:
-    - cron: '42 9 * * *'  # 11:42 по Польше
+    - cron: '*/5 * * * *'
 jobs:
   test:
     timeout-minutes: 60
@@ -47,4 +47,10 @@ jobs:
 
       # Step 7: Run tests
       - name: Run tests in PROD. not headed
-        run:  TEST_ENV=prod TEST_FRAMEWORK=playwright npx playwright test --project=chromium
+        run: TEST_ENV=prod TEST_FRAMEWORK=playwright npx playwright test --project=chromium --reporter=junit --output=./test-results/
+
+      # Step 8: Publish test results
+      - name: Upload Test Report
+        uses: actions/upload-test-report@v1
+        with:
+          path: test-results/*.xml
