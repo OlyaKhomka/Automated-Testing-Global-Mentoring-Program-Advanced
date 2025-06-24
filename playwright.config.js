@@ -2,6 +2,8 @@
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';
+import rpConfig from './reportportal.config.js';
+
 dotenv.config();
 
 const TEST_ENV = process.env.TEST_ENV || 'local'; // Default to 'local'
@@ -36,8 +38,10 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-      ['html'],
-      ['junit', { outputFile: 'test-results/results.xml' }] 
+    ['html'],
+    ['junit', { outputFile: 'test-results/results.xml' }],
+    ['list'],
+    ['@reportportal/agent-js-playwright', rpConfig],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {

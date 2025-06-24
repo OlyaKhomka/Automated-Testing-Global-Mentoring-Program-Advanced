@@ -3,12 +3,13 @@ const path = require('path');
 const xml2js = require('xml2js');
 const axios = require('axios');
 require('dotenv').config();
+const logger = require('./core/utils/logger');
 
 const resultsPath = path.join(__dirname, 'test-results/results.xml');
 const jiraRegex = /(SCRUM|JIRA)-\d+/i;
 
 async function updateJiraStatus(issueId, passed) {
-  const transition = passed ? 'Done' : 'To Do'; // Настрой по своей Jira workflow
+  const transition = passed ? 'Done' : 'To Do';
 
   try {
     const response = await axios.get(
@@ -27,7 +28,7 @@ async function updateJiraStatus(issueId, passed) {
     );
 
     if (!target) {
-      console.warn(`❌ Не найден переход "${transition}" для ${issueId}`);
+      logger.error(`❌ Status is not found "${transition}" for ${issueId}`);
       return;
     }
 
@@ -42,9 +43,9 @@ async function updateJiraStatus(issueId, passed) {
       }
     );
 
-    console.log(`✅ ${issueId} переведён в статус "${transition}"`);
+    logger.info(`✅ ${issueId} Status changed "${transition}"`);
   } catch (err) {
-    console.error(`❌ Ошибка при обновлении ${issueId}:`, err.message);
+    logger.error(`❌ Error when changing status ${issueId}:`, err.message);
   }
 }
 
@@ -69,12 +70,12 @@ fs.readFile(resultsPath, (err, data) => {
 
       if (jiraMatch) {
         const issueId = jiraMatch[0];
-        console.log(`🧪 [${passed ? 'PASSED' : 'FAILED'}] ${name}`);
-        console.log(`   ↳ Связан с Jira: ${issueId}`);
+        logger.info(`[${passed ? 'PASSED' : 'FAILED'}] ${name}`);
+        logger.info(`   ↳ Connected to Jira: ${issueId}`);
 
         await updateJiraStatus(issueId, passed);
       } else {
-        console.log(`⚠️ Jira ID не найден в названии: ${name}`);
+        logger.error(`⚠️ Jira ID isn't present in the name: ${name}`);
       }
     }
   });
