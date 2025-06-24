@@ -49,8 +49,13 @@ jobs:
       - name: Run tests in PROD. not headed
         run: TEST_ENV=prod TEST_FRAMEWORK=playwright npx playwright test --project=chromium --reporter=junit --output=./test-results/
 
-      # Step 8: Publish test results
-      - name: Upload Test Report
-        uses: actions/upload-test-report@v1
+      - name: Upload test results artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-test-results
+          path: test-results/
+
+      - name: Upload test results
+        uses: github/upload-test-results@v1
         with:
           path: test-results/*.xml
