@@ -11,7 +11,7 @@ module.exports = () => {
     browser.addCommand(
         'jsScrollToView',
         async function () {
-            console.log('i am jsScrollToView')
+            console.log('i am jsScrollToView');
             await browser.execute(el => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), this);
         },
         true

@@ -6,9 +6,9 @@ class ElementHelper {
   }
   async getLocator(elements) {
 
-    let stingNoSpace = elements.replace(/\s+/g, '');
-    let stringToLowerCase = stingNoSpace.replace(/\b\p{Lu}/gu, match => match.toLowerCase());
-    let arrayPathToElement = stringToLowerCase.split(">");
+    const stingNoSpace = elements.replace(/\s+/g, '');
+    const stringToLowerCase = stingNoSpace.replace(/\b\p{Lu}/gu, match => match.toLowerCase());
+    const arrayPathToElement = stringToLowerCase.split(">");
 
     logger.info(`Created array - ${arrayPathToElement}`);
 
