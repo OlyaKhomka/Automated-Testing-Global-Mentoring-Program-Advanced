@@ -12,11 +12,11 @@ async function updateJiraStatus(issueId, passed) {
 
   try {
     const response = await axios.get(
-      `${process.env.JIRA_DOMAIN}/rest/api/3/issue/${issueId}/transitions`,
+      `${process.env.JIRA_BASE_URL}/rest/api/3/issue/${issueId}/transitions`,
       {
         auth: {
           username: process.env.JIRA_EMAIL,
-          password: process.env.JIRA_API_TOKEN,
+          password: process.env.JIRA_TOKEN,
         },
         headers: { Accept: 'application/json' },
       }
@@ -32,12 +32,12 @@ async function updateJiraStatus(issueId, passed) {
     }
 
     await axios.post(
-      `${process.env.JIRA_DOMAIN}/rest/api/3/issue/${issueId}/transitions`,
+      `${process.env.JIRA_BASE_URL}/rest/api/3/issue/${issueId}/transitions`,
       { transition: { id: target.id } },
       {
         auth: {
           username: process.env.JIRA_EMAIL,
-          password: process.env.JIRA_API_TOKEN,
+          password: process.env.JIRA_TOKEN,
         },
       }
     );
