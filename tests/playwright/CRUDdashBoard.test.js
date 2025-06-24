@@ -8,7 +8,7 @@ test.describe("General CRUD actions test for Report Portal > Dashboard Page", ()
     await page.goto(`/ui/#${process.env.DASHBOARD_NAME}/dashboard`, { waitUntil: 'networkidle' });
   });
 
-  test('Add dashboard & configure widget and check if they are present', async ({ page, pageFactory }) => {
+  test('SCRUM-1: Add dashboard & configure widget and check if they are present', async ({ page, pageFactory }) => {
     const testData = Date.now().toString(); // to always generate unique numbers 
     await pageFactory.dashboardPage.addDashboard(testData, 'description2');
     await expect(pageFactory.dashboardPage.noWidgetMessage).toBeVisible();
@@ -17,7 +17,7 @@ test.describe("General CRUD actions test for Report Portal > Dashboard Page", ()
     await expect(pageFactory.launchesPage.createdDashboard(testData)).toBeVisible();
   });
 
-  test('Successfully delete a certain dashboard', async ({ pageFactory, page }) => {
+  test('SCRUM-2: Successfully delete a certain dashboard', async ({ pageFactory, page }) => {
     const testData = Date.now().toString(); // to always generate unique numbers 
     await pageFactory.dashboardPage.addDashboard(testData, 'description2');
     await pageFactory.dashboardPage.sidePanel.dashboardButton.click();
@@ -27,7 +27,7 @@ test.describe("General CRUD actions test for Report Portal > Dashboard Page", ()
     await expect(pageFactory.dashboardPage.rowName(testData).root).not.toBeVisible();
   });
 
-  test('Successfully duplicate a certain dashboard', async ({ pageFactory, page }) => {
+  test('SCRUM-3: Successfully duplicate a certain dashboard', async ({ pageFactory, page }) => {
     const testData = Date.now().toString(); // to always generate unique numbers 
     await pageFactory.dashboardPage.addDashboard(testData, 'description2');
     await pageFactory.dashboardPage.sidePanel.dashboardButton.click();

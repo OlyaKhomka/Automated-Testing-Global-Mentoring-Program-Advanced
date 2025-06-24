@@ -22,7 +22,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"🚀 Тесты запущены!"}' $SLACK_WEBHOOK_URL
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"🚀 Test are launched!"}' $SLACK_WEBHOOK_URL
 
       # Step 1.1: Set up Java (SonarScanner нужен Java)
       - name: Set up Java
@@ -94,14 +94,25 @@ jobs:
         with:
           name: junit-results
           path: test-results/
-          
+      # Step 10:
       - name: Send Slack notification (finish)
-        if: ${{ always() }}  # чтобы отправлять, даже если тесты упали
+        if: ${{ always() }}  # always send even if tests fail 
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          RESULT="Успешно"
+          RESULT="Success"
           if [ ${{ job.status }} != "success" ]; then
-            RESULT="С ошибками"
+            RESULT="Failure"
           fi
-          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"✅ Тесты завершены: $RESULT\"}" $SLACK_WEBHOOK_URL
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"✅ Test finished: $RESULT\"}" $SLACK_WEBHOOK_URL
+      # Step 10:
+      - name: Install dependencies for Jira updater
+        run: npm install xml2js axios
+      # Step 10:
+      - name: Run Jira Status Updater
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JUNIT_REPORT_PATH: './test-results/results.xml'
+        run: node jira-status-updater.js
