@@ -22,7 +22,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"Test are launched!"}' $SLACK_WEBHOOK_URL
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Test launched!"}' $SLACK_WEBHOOK_URL
 
       # Step 1.1: Set up Java (SonarScanner нужен Java)
       - name: Set up Java
