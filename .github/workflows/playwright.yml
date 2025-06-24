@@ -18,6 +18,12 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
+ -    - name: Send Slack notification (start)
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Test are launched!"}' $SLACK_WEBHOOK_URL
+
       # Step 1.1: Set up Java (SonarScanner нужен Java)
       - name: Set up Java
         uses: actions/setup-java@v3
@@ -88,3 +94,14 @@ jobs:
         with:
           name: junit-results
           path: test-results/
+
+      - name: Send Slack notification (finish)
+        if: ${{ always() }}  # always even if the tests fail 
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          RESULT="Успешно"
+          if [ ${{ job.status }} != "success" ]; then
+            RESULT="С ошибками"
+          fi
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"✅Test Run finished: $RESULT\"}" $SLACK_WEBHOOK_URL
