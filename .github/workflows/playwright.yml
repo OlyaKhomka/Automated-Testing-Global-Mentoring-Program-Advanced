@@ -7,7 +7,7 @@ on:
     branches: 
       - main
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '42 9 * * *'  # 11:42 по Польше
 jobs:
   test:
     timeout-minutes: 60
@@ -47,10 +47,10 @@ jobs:
 
       # Step 7: Run tests
       - name: Run tests in PROD. not headed
-        run: TEST_ENV=prod TEST_FRAMEWORK=playwright npx playwright test --project=chromium --reporter=junit --output=./test-results/
-        
-      - name: Upload test results as artifact
+        run:  TEST_ENV=prod TEST_FRAMEWORK=playwright npx playwright test --project=chromium
+      
+      - name: Upload Playwright HTML report
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-test-results
-          path: test-results/
+          name: playwright-html-report
+          path: playwright-report/
