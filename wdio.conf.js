@@ -5,7 +5,7 @@ exports.config = {
     // ====================
     // Runner Configuration
     // ====================
-    runner: 'local',  // Specifies that tests will run locally
+    runner: 'local', // Specifies that tests will run locally
     //
     // ==================
     // Specify Test Files

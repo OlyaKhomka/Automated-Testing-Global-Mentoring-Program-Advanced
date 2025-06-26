@@ -96,6 +96,8 @@ class DashboardPage extends BasePage {
         await this.filterNameInput.fill(filterName);
         await this.launchNameInput.fill(launchName);
         await this.submitFilterButton.click();
+        await this.nextStepButton.scrollIntoViewIfNeeded();
+        await this.context.waitForTimeout(1000);
         await this.nextStepButton.click();
         await this.context.waitForTimeout(1000);
         await this.addButton.click();

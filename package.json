@@ -17,7 +17,7 @@
     "cucumber_parallel_prod": "cross-env TEST_ENV=prod cucumber-js --config cucumber.js --parallel 2",
     "test_api": "npx playwright test --project=api-tests",
     "wdio_prod": "if exist tests-results\\allure-results rmdir /s /q tests-results\\allure-results && cross-env TEST_ENV=prod TEST_FRAMEWORK=wdio npx wdio run ./wdio.conf.js"
-    },
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OlyaKhomka/Automated-Testing-Global-Mentoring-Program-Advanced.git"
@@ -33,6 +33,7 @@
     "@cucumber/cucumber": "^11.2.0",
     "@eslint/js": "^9.23.0",
     "@playwright/test": "^1.50.0",
+    "@reportportal/agent-js-playwright": "^5.1.11",
     "@types/node": "^22.10.10",
     "@wdio/allure-reporter": "^9.15.0",
     "@wdio/cli": "^9.15.0",
@@ -50,6 +51,8 @@
   },
   "dependencies": {
     "dotenv": "^16.4.7",
-    "winston": "^3.17.0"
+    "node-fetch": "^2.7.0",
+    "winston": "^3.17.0",
+    "xml2js": "^0.6.2"
   }
 }

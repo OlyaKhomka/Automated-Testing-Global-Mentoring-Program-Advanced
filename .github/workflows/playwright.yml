@@ -18,33 +18,105 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Node.js
+      # Step 1: Slack Notification: Start
+      - name: Send Slack notification (start)
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"🚀 Test are launched!"}' $SLACK_WEBHOOK_URL
+
+      # Step 2.1: Set up Java (SonarScanner needs Java)
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Step 2.2: Download SonarScanner CLI
+      - name: Download SonarScanner
+        run: |
+          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+          unzip sonar-scanner.zip -d $HOME
+          echo "$HOME/sonar-scanner-5.0.1.3006-linux/bin" >> $GITHUB_PATH
+
+      # Step 2.3: Run SonarQube analysis
+      - name: Run SonarCloud analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_QUBE_TOKEN }}
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=OlyaKhomka_Automated-Testing-Global-Mentoring-Program-Advanced \
+            -Dsonar.organization=olyakhomka \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=$SONAR_TOKEN
+
+      # Step 3: Set up Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: lts/*
 
-      # Step 3: Install dependencies
+      # Step 4: Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # Step 4: Run linting (Optional if you use ESLint or similar tools)
+      # Step 5: Run linting
       - name: Run linting
         run: npm run eslint
       
-      # Step 5: Install Playwright browsers
+      # Step 6: Install Playwright browsers
       - name: Install Playwright browsers
         run: npx playwright install
 
-      # Step 6: Create .env file using GitHub secrets 
+      # Step 7: Create .env file using GitHub secrets 
       - name: Create .env file from secrets
         run: |
           echo "USER_EMAIL=${{ secrets.USER_EMAIL }}" >> .env
           echo "USER_PASSWORD=${{ secrets.USER_PASSWORD }}" >> .env
           echo "BASE_URL_LOCAL=${{ secrets.BASE_URL_LOCAL }}" >> .env
           echo "BASE_URL_PROD=${{ secrets.BASE_URL_PROD }}" >> .env
-          echo "DASHBOARD_NAME${{ secrets.DASHBOARD_NAME }}" >> .env
+          echo "DASHBOARD_NAME=${{ secrets.DASHBOARD_NAME }}" >> .env
 
-      # Step 7: Run tests
+      # Step 8: Run tests
       - name: Run tests in PROD. not headed
-        run: TEST_ENV=prod npx playwright test --timeout=60000
+        run:  TEST_ENV=prod TEST_FRAMEWORK=playwright npx playwright test --project=chromium
+      
+      # Step 9: Upload Playwright Report to GitHub Artifacts 
+      - name: Upload Playwright HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-html-report
+          path: playwright-report/
+          
+      # Step 10: Upload JUnit Report to GitHub Artifacts 
+      - name: Upload JUnit test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-results
+          path: test-results/
+      
+      # Step 11: Slack Notification (finish)
+      - name: Send Slack notification (finish)
+        if: ${{ always() }}  # always send even if tests fail 
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          RESULT="Success"
+          if [ ${{ job.status }} != "success" ]; then
+            RESULT="Failure"
+          fi
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"✅ Test finished: $RESULT\"}" $SLACK_WEBHOOK_URL
+      
+      # Step 12: Install Dependencies for Jira Updater 
+      - name: Install dependencies for Jira updater
+        run: npm install xml2js axios
+      
+      # Step 13: Update Jira Test Case statuses
+      - name: Run Jira Status Updater
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+          JUNIT_REPORT_PATH: './test-results/results.xml'
+        run: node jira-status-updater.js

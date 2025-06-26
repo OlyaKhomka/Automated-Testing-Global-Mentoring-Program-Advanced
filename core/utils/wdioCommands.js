@@ -11,7 +11,6 @@ module.exports = () => {
     browser.addCommand(
         'jsScrollToView',
         async function () {
-            console.log('i am jsScrollToView')
             await browser.execute(el => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), this);
         },
         true
@@ -40,8 +39,6 @@ module.exports = () => {
     browser.addCommand(
         'jsHover',
         async function () {
-            console.log('Executing jsHover...');
-
             await browser.execute(el => {
                 // Simulation of a mouse click 
                 const mouseOverEvent = new MouseEvent('mouseover', {
