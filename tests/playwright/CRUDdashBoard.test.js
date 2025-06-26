@@ -36,5 +36,5 @@ test.describe("General CRUD actions test for Report Portal > Dashboard Page", ()
     await pageFactory.dashboardPage.confirmDuplicateComponent.confirmDuplicateButton.click();
     await expect(pageFactory.dashboardPage.duplicateToastMessage).toBeVisible();
   });
-
+console.log('test')
 });
